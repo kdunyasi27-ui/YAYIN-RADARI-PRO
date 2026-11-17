@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<title>YAYIN RADARI PRO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1220;color:#edf3fb;font-family:Arial,sans-serif}
+header{padding:22px;background:#121d2e;border-bottom:1px solid #26364d}
+header h1{margin:0;color:#54d6d0;font-size:24px}
+header p{color:#9fb0c5;margin-bottom:0}
+main{max-width:1000px;margin:auto;padding:18px}
+.card{background:#121d2e;border:1px solid #26364d;border-radius:15px;padding:18px;margin-bottom:16px}
+h2{font-size:18px;margin-top:0}
+label{display:block;color:#aabbd0;margin:12px 0 6px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #34465e;border-radius:9px;background:#0b1626;color:white;font-size:15px}
+textarea{min-height:110px}
+button{background:#54d6d0;color:#07171b;font-weight:bold;border:0;border-radius:9px;padding:13px 17px;margin-top:12px;cursor:pointer}
+button.secondary{background:#293b53;color:white}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:#19283c;padding:15px;border-radius:10px}
+.stat b{display:block;font-size:25px;color:#54d6d0;margin-top:8px}
+.stat small{color:#9fb0c5}
+.muted{color:#9fb0c5;font-size:13px;line-height:1.5}
+.notice{background:#332b1b;border:1px solid #66542e;color:#f5d99c;padding:13px;border-radius:10px;margin-bottom:16px;font-size:13px;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid #34465e;vertical-align:top}
+th{color:#9fb0c5}
+.tag{background:#49391f;color:#f5d99c;padding:4px 7px;border-radius:7px}
+footer{color:#8fa1b8;font-size:12px;padding:20px;text-align:center}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}header h1{font-size:20px}main{padding:12px}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>◉ YAYIN RADARI PRO</h1>
+<p>TikTok canlı yayın güvenlik ve denetim merkezi</p>
+</header>
+
+<main>
+
+<div class="notice">
+Bu sistem bağımsız bir denetim panelidir. TikTok'un gizli şikâyetçi kayıtlarına erişmez. Otomatik olarak kişileri suçlamaz veya toplu şikâyet göndermez. Analiz, yalnızca sağlanan ve incelemeye yetkili olduğunuz veriler üzerinden yapılır.
+</div>
+
+<section class="card">
+<h2>📡 Denetim hedefi ekle</h2>
+
+<label>Giriş türü</label>
+<select id="type">
+<option value="Kullanıcı adı">TikTok kullanıcı adı</option>
+<option value="Yayın linki">Canlı yayın bağlantısı</option>
+</select>
+
+<label>Kullanıcı adı veya yayın linki</label>
+<input id="target" placeholder="@kullanici veya TikTok linki">
+
+<button onclick="addTarget()">Hedefi kaydet</button>
+<button class="secondary" onclick="openTikTok()">TikTok'ta aç</button>
+<p id="targetStatus" class="muted">Henüz hedef seçilmedi.</p>
+</section>
+
+<section class="stats">
+<div class="stat"><small>Kayıtlı hedef</small><b id="targetCount">0</b></div>
+<div class="stat"><small>İncelenen mesaj</small><b id="messageCount">0</b></div>
+<div class="stat"><small>Şüpheli örüntü</small><b id="spamCount">0</b></div>
+</section>
+
+<section class="card">
+<h2>🔎 Yorum analizi</h2>
+<p class="muted">İzinli şekilde elde ettiğiniz yorumları aşağıdaki biçimde girin: @hesap: yorum metni</p>
+
+<textarea id="comments" placeholder="@hesap1: aynı mesaj&#10;@hesap2: aynı mesaj&#10;@hesap3: merhaba"></textarea>
+
+<button onclick="analyze()">Yorumları analiz et</button>
+<button class="secondary" onclick="clearComments()">Temizle</button>
+<p id="analysisSummary" class="muted">Henüz analiz yapılmadı.</p>
+
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>Hesap</th>
+<th>Gözlem</th>
+<th>Durum</th>
+</tr>
+</thead>
+<tbody id="results">
+<tr><td colspan="3">Henüz sonuç yok.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card">
+<h2>🛡️ Şüpheli davranış kategorileri</h2>
+<ul>
+<li>Tekrarlanan spam mesajları</li>
+<li>Şüpheli bağlantı paylaşımı</li>
+<li>Çok sayıda benzer yorum</li>
+<li>Koordineli hareket belirtileri</li>
+<li>Şüpheli hesap davranışları</li>
+<li>Toplu şikâyet saldırısı iddiaları</li>
+</ul>
+<p class="muted">Toplu şikâyet iddiaları, yalnızca zaman ve davranış verileriyle değerlendirilebilir. Şikâyet gönderen gizli hesaplar bu yöntemle belirlenemez.</p>
+</section>
+
+<section class="card">
+<h2>📝 Denetim kaydı oluştur</h2>
+
+<label>Olay türü</label>
+<select id="eventType">
+<option>Spam yorum</option>
+<option>Şüpheli bağlantı</option>
+<option>Koordineli hareket şüphesi</option>
+<option>Toplu şikâyet saldırısı iddiası</option>
+<option>Taciz veya tehdit</option>
+<option>Diğer</option>
+</select>
+
+<label>Şüpheli hesap (biliniyorsa)</label>
+<input id="suspect" placeholder="@kullanici">
+
+<label>Olay açıklaması ve kanıt notu</label>
+<textarea id="description" placeholder="Olayın tarihini, saatini ve gözlemini yazın."></textarea>
+
+<button onclick="saveRecord()">Kaydı oluştur</button>
+<button class="secondary" onclick="exportRecords()">Kayıtları indir</button>
+</section>
+
+<section class="card">
+<h2>📚 Denetim geçmişi</h2>
+<div id="history" class="muted">Henüz kayıt yok.</div>
+</section>
+
+</main>
+
+<footer>
+YAYIN RADARI PRO · TikTok bağımsız denetim prototipi
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function read(key){
+ try{return JSON.parse(localStorage.getItem(key))||[]}
+ catch{return []}
+}
+
+function write(key,value){
+ localStorage.setItem(key,JSON.stringify(value));
+}
+
+function safe(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+ '&':'&amp;','<':'&lt;','>':'&gt;',
+ '"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+
+function addTarget(){
+ const value=$('target').value.trim();
+ if(!value)return alert('Hedef girin.');
+
+ const list=read('targets');
+ list.unshift({
+ type:$('type').value,
+ value,
+ date:new Date().toLocaleString('tr-TR')
+ });
+
+ write('targets',list);
+ $('targetStatus').textContent='Hedef kaydedildi: '+value;
+ refresh();
+}
+
+function openTikTok(){
+ let value=$('target').value.trim();
+ if(!value)value=read('targets')[0]?.value||'';
+ if(!value)return alert('Önce hedef girin.');
+
+ let url=value.startsWith('http')
+ ?value
+ :'https://www.tiktok.com/@'+value.replace('@','');
+
+ if(!/^https:\/\/(www\.)?tiktok\.com\//i.test(url)){
+ return alert('Geçerli bir TikTok bağlantısı girin.');
+ }
+
+ window.open(url,'_blank','noopener');
+}
+
+let latest=[];
+
+function analyze(){
+ const lines=$('comments').value.split(/\n+/).filter(Boolean);
+ if(!lines.length)return alert('Yorum verisi girin.');
+
+ const rows=lines.map(line=>{
+ const match=line.match(/^(@?[^:：]{1,40})[:：]\s*(.*)$/);
+ return match
+ ?{user:match[1].startsWith('@')?match[1]:'@'+match[1],msg:match[2]}
+ :{user:'Bilinmeyen hesap',msg:line};
+ });
+
+ const counts={};
+ rows.forEach(r=>{
+ const key=r.msg.toLowerCase().trim();
+ counts[key]=(counts[key]||0)+1;
+ });
+
+ latest=[];
+
+ rows.forEach(r=>{
+ let reasons=[];
+ const key=r.msg.toLowerCase().trim();
+
+ if(counts[key]>1)reasons.push('Tekrarlanan mesaj');
+ if(/https?:\/\//i.test(r.msg))reasons.push('Bağlantı içeriyor');
+ if(/(.)\1{7,}/i.test(r.msg))reasons.push('Olağandışı karakter tekrarı');
+
+ if(reasons.length){
+ latest.push({
+ user:r.user,
+ msg:r.msg,
+ reasons:reasons
+ });
+ }
+ });
+
+ $('messageCount').textContent=rows.length;
+ $('spamCount').textContent=latest.length;
+
+ $('analysisSummary').textContent=
+ rows.length+' mesaj incelendi. '+latest.length+
+ ' şüpheli örüntü satırı bulundu. İnsan incelemesi gereklidir.';
+
+ $('results').innerHTML=latest.length
+ ?latest.map(r=>`
+ <tr>
+ <td>${safe(r.user)}</td>
+ <td>${safe(r.reasons.join(', '))}</td>
+ <td><span class="tag">İncelenmeli</span></td>
+ </tr>`).join('')
+ :'<tr><td colspan="3">Şüpheli örüntü bulunmadı.</td></tr>';
+}
+
+function clearComments(){
+ $('comments').value='';
+ $('results').innerHTML='<tr><td colspan="3">Henüz sonuç yok.</td></tr>';
+ $('analysisSummary').textContent='Henüz analiz yapılmadı.';
+ latest=[];
+}
+
+function saveRecord(){
+ const description=$('description').value.trim();
+ if(!description)return alert('Açıklama girin.');
+
+ const list=read('records');
+
+ list.unshift({
+ type:$('eventType').value,
+ suspect:$('suspect').value.trim()||'Belirtilmedi',
+ description,
+ target:read('targets')[0]?.value||'Belirtilmedi',
+ date:new Date().toLocaleString('tr-TR'),
+ analysis:latest
+ });
+
+ write('records',list);
+ $('description').value='';
+ $('suspect').value='';
+ refresh();
+ alert('Denetim kaydı oluşturuldu.');
+}
+
+function exportRecords(){
+ const data=JSON.stringify(read('records'),null,2);
+ const blob=new Blob([data],{type:'application/json'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;
+ a.download='yayin-radari-kayitlari.json';
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+function refresh(){
+ const targets=read('targets');
+ const records=read('records');
+
+ $('targetCount').textContent=targets.length;
+
+ $('history').innerHTML=records.length
+ ?records.map(r=>`
+ <div style="padding:12px 0;border-bottom:1px solid #34465e">
+ <b>${safe(r.type)}</b><br>
+ <small>${safe(r.date)}</small><br>
+ ${safe(r.target)}<br>
+ ${safe(r.suspect)}<br>
+ ${safe(r.description)}
+ </div>`).join('')
+ :'Henüz kayıt yok.';
+}
+
+refresh();
+</script>
+</body>
+</html>
