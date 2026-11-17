@@ -1,313 +1,168 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1220">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b14">
 <title>YAYIN RADARI PRO</title>
 <style>
+:root{color-scheme:dark;--bg:#080b14;--panel:#111827;--line:#253149;--muted:#9aa8bf;--cyan:#00e5ff;--pink:#ff2d75;--green:#39d98a}
 *{box-sizing:border-box}
-body{margin:0;background:#0b1220;color:#edf3fb;font-family:Arial,sans-serif}
-header{padding:22px;background:#121d2e;border-bottom:1px solid #26364d}
-header h1{margin:0;color:#54d6d0;font-size:24px}
-header p{color:#9fb0c5;margin-bottom:0}
-main{max-width:1000px;margin:auto;padding:18px}
-.card{background:#121d2e;border:1px solid #26364d;border-radius:15px;padding:18px;margin-bottom:16px}
-h2{font-size:18px;margin-top:0}
-label{display:block;color:#aabbd0;margin:12px 0 6px}
-input,select,textarea{width:100%;padding:13px;border:1px solid #34465e;border-radius:9px;background:#0b1626;color:white;font-size:15px}
-textarea{min-height:110px}
-button{background:#54d6d0;color:#07171b;font-weight:bold;border:0;border-radius:9px;padding:13px 17px;margin-top:12px;cursor:pointer}
-button.secondary{background:#293b53;color:white}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.stat{background:#19283c;padding:15px;border-radius:10px}
-.stat b{display:block;font-size:25px;color:#54d6d0;margin-top:8px}
-.stat small{color:#9fb0c5}
-.muted{color:#9fb0c5;font-size:13px;line-height:1.5}
-.notice{background:#332b1b;border:1px solid #66542e;color:#f5d99c;padding:13px;border-radius:10px;margin-bottom:16px;font-size:13px;line-height:1.5}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:10px;border-bottom:1px solid #34465e;vertical-align:top}
-th{color:#9fb0c5}
-.tag{background:#49391f;color:#f5d99c;padding:4px 7px;border-radius:7px}
-footer{color:#8fa1b8;font-size:12px;padding:20px;text-align:center}
-@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}header h1{font-size:20px}main{padding:12px}}
+body{margin:0;background:radial-gradient(circle at 80% 0%,#18213b 0,transparent 35%),var(--bg);color:#eef4ff;font:15px system-ui,Arial,sans-serif}
+header{padding:22px max(18px,calc((100% - 1120px)/2));border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.brand{font-weight:900;letter-spacing:1px;font-size:19px}
+.brand span{color:var(--pink)}
+.status{color:var(--green);font-size:12px}
+main{max-width:1120px;margin:26px auto;padding:0 16px}
+.hero{padding:25px;border:1px solid #293751;border-radius:20px;background:linear-gradient(120deg,#121b2e,#101321);margin-bottom:18px}
+h1{font-size:clamp(26px,5vw,42px);margin:0 0 8px}
+.hero p,.muted{color:var(--muted);line-height:1.55}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:#101827;border:1px solid var(--line);border-radius:16px;padding:19px;min-width:0}
+.wide{grid-column:1/-1}
+h2{font-size:18px;margin:0 0 14px}
+label{display:block;color:#cbd7ea;font-size:13px;margin:12px 0 6px}
+input,textarea,select{width:100%;background:#080f1d;border:1px solid #34435c;border-radius:10px;padding:12px;color:#fff;font:inherit}
+textarea{min-height:110px;resize:vertical}
+button{border:0;border-radius:10px;padding:11px 15px;background:linear-gradient(90deg,#00bad4,#00e5ff);color:#041018;font-weight:800;cursor:pointer;margin-top:12px}
+button.secondary{background:#25334b;color:#eaf2ff}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1}
+.pill{display:inline-block;border:1px solid #3b4c68;border-radius:99px;padding:5px 9px;color:#b9c9df;font-size:12px}
+.notice{padding:12px;border-radius:10px;background:#2b2416;border:1px solid #6b5122;color:#f6dca5;font-size:13px;line-height:1.5}
+.item{border-top:1px solid var(--line);padding:12px 0}
+.item:first-child{border-top:0}
+.score{font-weight:800;color:var(--cyan)}
+footer{max-width:1120px;margin:30px auto;padding:18px;color:var(--muted);border-top:1px solid var(--line);font-size:13px}
+a{color:#70dff0}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}header{align-items:flex-start}}
 </style>
 </head>
 <body>
-
 <header>
-<h1>◉ YAYIN RADARI PRO</h1>
-<p>TikTok canlı yayın güvenlik ve denetim merkezi</p>
+<div class="brand">◉ YAYIN RADARI <span>PRO</span></div>
+<div class="status">● DENETİM PANELİ HAZIR</div>
 </header>
-
 <main>
-
-<div class="notice">
-Bu sistem bağımsız bir denetim panelidir. TikTok'un gizli şikâyetçi kayıtlarına erişmez. Otomatik olarak kişileri suçlamaz veya toplu şikâyet göndermez. Analiz, yalnızca sağlanan ve incelemeye yetkili olduğunuz veriler üzerinden yapılır.
-</div>
-
+<section class="hero">
+<span class="pill">Yayın güvenliği ve olay kaydı</span>
+<h1>Yayınları daha güvenli takip et.</h1>
+<p>Kullanıcı adı veya yayın bağlantısıyla denetim hedefi oluştur; gözlemlediğin olayları kaydet, paylaştığın yorum metinlerinde spam örüntülerini incele ve kanıtlı rapor hazırla.</p>
+</section>
+<div class="notice">Önemli: Bu sürüm TikTok'a bağlanmaz ve canlı yayınları otomatik izlemez. Yalnızca senin girdiğin bilgiler ve metinler üzerinde çalışır. TikTok'un gizli şikâyetçi kayıtlarına veya kimliklerine erişemez.</div>
+<div class="grid" style="margin-top:16px">
 <section class="card">
-<h2>📡 Denetim hedefi ekle</h2>
-
+<h2>1. Denetim hedefi oluştur</h2>
 <label>Giriş türü</label>
-<select id="type">
-<option value="Kullanıcı adı">TikTok kullanıcı adı</option>
-<option value="Yayın linki">Canlı yayın bağlantısı</option>
+<select id="kind">
+<option value="Kullanıcı adı">Kullanıcı adı</option>
+<option value="Yayın bağlantısı">Yayın bağlantısı</option>
 </select>
-
-<label>Kullanıcı adı veya yayın linki</label>
-<input id="target" placeholder="@kullanici veya TikTok linki">
-
-<button onclick="addTarget()">Hedefi kaydet</button>
-<button class="secondary" onclick="openTikTok()">TikTok'ta aç</button>
-<p id="targetStatus" class="muted">Henüz hedef seçilmedi.</p>
+<label>TikTok kullanıcı adı veya yayın URL'si</label>
+<input id="target" placeholder="@kullanici veya https://www.tiktok.com/...">
+<label>Not (isteğe bağlı)</label>
+<input id="targetNote" placeholder="Örn. 18 Kasım akşam yayını">
+<button id="addTarget">Hedefi kaydet</button>
 </section>
-
-<section class="stats">
-<div class="stat"><small>Kayıtlı hedef</small><b id="targetCount">0</b></div>
-<div class="stat"><small>İncelenen mesaj</small><b id="messageCount">0</b></div>
-<div class="stat"><small>Şüpheli örüntü</small><b id="spamCount">0</b></div>
-</section>
-
 <section class="card">
-<h2>🔎 Yorum analizi</h2>
-<p class="muted">İzinli şekilde elde ettiğiniz yorumları aşağıdaki biçimde girin: @hesap: yorum metni</p>
-
-<textarea id="comments" placeholder="@hesap1: aynı mesaj&#10;@hesap2: aynı mesaj&#10;@hesap3: merhaba"></textarea>
-
-<button onclick="analyze()">Yorumları analiz et</button>
-<button class="secondary" onclick="clearComments()">Temizle</button>
-<p id="analysisSummary" class="muted">Henüz analiz yapılmadı.</p>
-
-<div style="overflow-x:auto">
-<table>
-<thead>
-<tr>
-<th>Hesap</th>
-<th>Gözlem</th>
-<th>Durum</th>
-</tr>
-</thead>
-<tbody id="results">
-<tr><td colspan="3">Henüz sonuç yok.</td></tr>
-</tbody>
-</table>
+<h2>2. Spam metni analizi</h2>
+<p class="muted">Gözlemlediğin yorumları satır satır yapıştır. Tekrar, bağlantı yoğunluğu ve benzer mesajları işaretler.</p>
+<label>Yorumlar</label>
+<textarea id="comments" placeholder="Aynı mesajı gönderen yorumları satır satır yapıştır..."></textarea>
+<button id="analyze">Metni analiz et</button>
+<div id="analysisResult" class="muted" style="margin-top:12px">Henüz analiz yapılmadı.</div>
+</section>
+<section class="card wide">
+<div class="row" style="align-items:center">
+<h2 style="margin:0">Denetim kayıtları</h2>
+<button class="secondary" id="export" style="max-width:170px;margin-top:0">JSON dışa aktar</button>
 </div>
+<div id="targets" class="muted" style="margin-top:12px">Henüz hedef yok.</div>
 </section>
-
 <section class="card">
-<h2>🛡️ Şüpheli davranış kategorileri</h2>
-<ul>
-<li>Tekrarlanan spam mesajları</li>
-<li>Şüpheli bağlantı paylaşımı</li>
-<li>Çok sayıda benzer yorum</li>
-<li>Koordineli hareket belirtileri</li>
-<li>Şüpheli hesap davranışları</li>
-<li>Toplu şikâyet saldırısı iddiaları</li>
-</ul>
-<p class="muted">Toplu şikâyet iddiaları, yalnızca zaman ve davranış verileriyle değerlendirilebilir. Şikâyet gönderen gizli hesaplar bu yöntemle belirlenemez.</p>
-</section>
-
-<section class="card">
-<h2>📝 Denetim kaydı oluştur</h2>
-
-<label>Olay türü</label>
-<select id="eventType">
-<option>Spam yorum</option>
-<option>Şüpheli bağlantı</option>
-<option>Koordineli hareket şüphesi</option>
-<option>Toplu şikâyet saldırısı iddiası</option>
-<option>Taciz veya tehdit</option>
+<h2>3. Olay kaydı ekle</h2>
+<label>İlgili hedef</label>
+<select id="targetSelect"><option value="">Önce hedef ekle</option></select>
+<label>Kategori</label>
+<select id="category">
+<option>Spam</option>
+<option>Tekrarlı yorum</option>
+<option>Şüpheli koordinasyon</option>
+<option>Hakaret / taciz</option>
 <option>Diğer</option>
 </select>
-
-<label>Şüpheli hesap (biliniyorsa)</label>
-<input id="suspect" placeholder="@kullanici">
-
-<label>Olay açıklaması ve kanıt notu</label>
-<textarea id="description" placeholder="Olayın tarihini, saatini ve gözlemini yazın."></textarea>
-
-<button onclick="saveRecord()">Kaydı oluştur</button>
-<button class="secondary" onclick="exportRecords()">Kayıtları indir</button>
+<label>Açıklama ve gözlem</label>
+<textarea id="description" placeholder="Ne gördün? Saat, tekrar sayısı ve gözlemlenebilir ayrıntıları yaz."></textarea>
+<label>Kanıt bağlantısı (isteğe bağlı)</label>
+<input id="evidence" placeholder="Ekran görüntüsü veya herkese açık bağlantı">
+<button id="addIncident">Olayı kaydet</button>
 </section>
-
 <section class="card">
-<h2>📚 Denetim geçmişi</h2>
-<div id="history" class="muted">Henüz kayıt yok.</div>
+<h2>Olay geçmişi</h2>
+<div id="incidents" class="muted">Henüz olay kaydı yok.</div>
 </section>
-
+</div>
 </main>
-
 <footer>
-YAYIN RADARI PRO · TikTok bağımsız denetim prototipi
+YAYIN RADARI PRO ·
+<a href="/terms">Kullanım Koşulları</a> ·
+<a href="/privacy">Gizlilik Politikası</a>
+<br>Bu araç bağımsız bir denetim kayıt aracıdır; TikTok tarafından sunulmuş veya onaylanmış değildir.
 </footer>
-
 <script>
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
+let targets=JSON.parse(localStorage.getItem('yrp_targets')||'[]');
+let incidents=JSON.parse(localStorage.getItem('yrp_incidents')||'[]');
 
-function read(key){
- try{return JSON.parse(localStorage.getItem(key))||[]}
- catch{return []}
+function save(){
+localStorage.setItem('yrp_targets',JSON.stringify(targets));
+localStorage.setItem('yrp_incidents',JSON.stringify(incidents));
+render();
 }
-
-function write(key,value){
- localStorage.setItem(key,JSON.stringify(value));
+function esc(s){
+return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-
-function safe(value){
- return String(value).replace(/[&<>"']/g,c=>({
- '&':'&amp;','<':'&lt;','>':'&gt;',
- '"':'&quot;',"'":'&#39;'
- }[c]));
+function render(){
+$('targets').innerHTML=targets.length?targets.map(t=>`<div class="item"><b>${esc(t.value)}</b> <span class="pill">${esc(t.kind)}</span><div class="muted">${esc(t.note||'Not yok')} · ${new Date(t.date).toLocaleString('tr-TR')}</div></div>`).join(''):'Henüz hedef yok.';
+$('targetSelect').innerHTML='<option value="">Hedef seç</option>'+targets.map(t=>`<option value="${t.id}">${esc(t.value)}</option>`).join('');
+$('incidents').innerHTML=incidents.length?incidents.slice().reverse().map(i=>`<div class="item"><b>${esc(i.category)}</b> · ${esc(i.target)}<div class="muted">${new Date(i.date).toLocaleString('tr-TR')}</div><p>${esc(i.description)}</p>${i.evidence?`<a href="${esc(i.evidence)}" target="_blank" rel="noopener">Kanıtı aç</a>`:''}</div>`).join(''):'Henüz olay kaydı yok.';
 }
-
-function addTarget(){
- const value=$('target').value.trim();
- if(!value)return alert('Hedef girin.');
-
- const list=read('targets');
- list.unshift({
- type:$('type').value,
- value,
- date:new Date().toLocaleString('tr-TR')
- });
-
- write('targets',list);
- $('targetStatus').textContent='Hedef kaydedildi: '+value;
- refresh();
-}
-
-function openTikTok(){
- let value=$('target').value.trim();
- if(!value)value=read('targets')[0]?.value||'';
- if(!value)return alert('Önce hedef girin.');
-
- let url=value.startsWith('http')
- ?value
- :'https://www.tiktok.com/@'+value.replace('@','');
-
- if(!/^https:\/\/(www\.)?tiktok\.com\//i.test(url)){
- return alert('Geçerli bir TikTok bağlantısı girin.');
- }
-
- window.open(url,'_blank','noopener');
-}
-
-let latest=[];
-
-function analyze(){
- const lines=$('comments').value.split(/\n+/).filter(Boolean);
- if(!lines.length)return alert('Yorum verisi girin.');
-
- const rows=lines.map(line=>{
- const match=line.match(/^(@?[^:：]{1,40})[:：]\s*(.*)$/);
- return match
- ?{user:match[1].startsWith('@')?match[1]:'@'+match[1],msg:match[2]}
- :{user:'Bilinmeyen hesap',msg:line};
- });
-
- const counts={};
- rows.forEach(r=>{
- const key=r.msg.toLowerCase().trim();
- counts[key]=(counts[key]||0)+1;
- });
-
- latest=[];
-
- rows.forEach(r=>{
- let reasons=[];
- const key=r.msg.toLowerCase().trim();
-
- if(counts[key]>1)reasons.push('Tekrarlanan mesaj');
- if(/https?:\/\//i.test(r.msg))reasons.push('Bağlantı içeriyor');
- if(/(.)\1{7,}/i.test(r.msg))reasons.push('Olağandışı karakter tekrarı');
-
- if(reasons.length){
- latest.push({
- user:r.user,
- msg:r.msg,
- reasons:reasons
- });
- }
- });
-
- $('messageCount').textContent=rows.length;
- $('spamCount').textContent=latest.length;
-
- $('analysisSummary').textContent=
- rows.length+' mesaj incelendi. '+latest.length+
- ' şüpheli örüntü satırı bulundu. İnsan incelemesi gereklidir.';
-
- $('results').innerHTML=latest.length
- ?latest.map(r=>`
- <tr>
- <td>${safe(r.user)}</td>
- <td>${safe(r.reasons.join(', '))}</td>
- <td><span class="tag">İncelenmeli</span></td>
- </tr>`).join('')
- :'<tr><td colspan="3">Şüpheli örüntü bulunmadı.</td></tr>';
-}
-
-function clearComments(){
- $('comments').value='';
- $('results').innerHTML='<tr><td colspan="3">Henüz sonuç yok.</td></tr>';
- $('analysisSummary').textContent='Henüz analiz yapılmadı.';
- latest=[];
-}
-
-function saveRecord(){
- const description=$('description').value.trim();
- if(!description)return alert('Açıklama girin.');
-
- const list=read('records');
-
- list.unshift({
- type:$('eventType').value,
- suspect:$('suspect').value.trim()||'Belirtilmedi',
- description,
- target:read('targets')[0]?.value||'Belirtilmedi',
- date:new Date().toLocaleString('tr-TR'),
- analysis:latest
- });
-
- write('records',list);
- $('description').value='';
- $('suspect').value='';
- refresh();
- alert('Denetim kaydı oluşturuldu.');
-}
-
-function exportRecords(){
- const data=JSON.stringify(read('records'),null,2);
- const blob=new Blob([data],{type:'application/json'});
- const url=URL.createObjectURL(blob);
- const a=document.createElement('a');
- a.href=url;
- a.download='yayin-radari-kayitlari.json';
- a.click();
- URL.revokeObjectURL(url);
-}
-
-function refresh(){
- const targets=read('targets');
- const records=read('records');
-
- $('targetCount').textContent=targets.length;
-
- $('history').innerHTML=records.length
- ?records.map(r=>`
- <div style="padding:12px 0;border-bottom:1px solid #34465e">
- <b>${safe(r.type)}</b><br>
- <small>${safe(r.date)}</small><br>
- ${safe(r.target)}<br>
- ${safe(r.suspect)}<br>
- ${safe(r.description)}
- </div>`).join('')
- :'Henüz kayıt yok.';
-}
-
-refresh();
+$('addTarget').onclick=()=>{
+let value=$('target').value.trim();
+if(!value)return alert('Kullanıcı adı veya yayın bağlantısı gir.');
+targets.push({id:crypto.randomUUID(),kind:$('kind').value,value,note:$('targetNote').value.trim(),date:new Date().toISOString()});
+$('target').value='';
+$('targetNote').value='';
+save();
+};
+$('addIncident').onclick=()=>{
+let id=$('targetSelect').value,description=$('description').value.trim();
+if(!id||!description)return alert('Hedef seç ve açıklama yaz.');
+let t=targets.find(x=>x.id===id);
+incidents.push({id:crypto.randomUUID(),target:t.value,category:$('category').value,description,evidence:$('evidence').value.trim(),date:new Date().toISOString()});
+$('description').value='';
+$('evidence').value='';
+save();
+};
+$('analyze').onclick=()=>{
+let lines=$('comments').value.split(/\n/).map(x=>x.trim()).filter(Boolean);
+if(!lines.length)return alert('Önce yorum metinlerini gir.');
+let counts={};
+lines.forEach(x=>counts[x.toLocaleLowerCase('tr-TR')]=(counts[x.toLocaleLowerCase('tr-TR')]||0)+1);
+let repeated=Object.entries(counts).filter(([,n])=>n>1).sort((a,b)=>b[1]-a[1]);
+let urls=lines.filter(x=>/https?:\/\/|www\./i.test(x)).length;
+$('analysisResult').innerHTML=`<div><span class="score">${lines.length}</span> yorum incelendi · <span class="score">${repeated.length}</span> tekrarlanan metin · <span class="score">${urls}</span> bağlantı içeren yorum</div>`+(repeated.length?'<div class="item"><b>Tekrar eden metinler</b>'+repeated.slice(0,10).map(([s,n])=>`<p>${esc(s)} <span class="pill">${n} kez</span></p>`).join('')+'</div>':'<p>Tekrarlanan birebir metin bulunmadı.</p>')+'<p class="muted">Bu sonuçlar yalnızca metin benzerliğidir; hesapların aynı kişiye ait olduğunu veya koordineli saldırı yaptığını kanıtlamaz.</p>';
+};
+$('export').onclick=()=>{
+let blob=new Blob([JSON.stringify({targets,incidents,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
+let a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download='yayin-radari-kayitlari.json';
+a.click();
+URL.revokeObjectURL(a.href);
+};
+render();
 </script>
 </body>
 </html>
